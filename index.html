@@ -3,42 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="src/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <title>My Weather-App</title>
   </head>
   <body>
     <div class="content">
-    
-    <header>
-      <form>
-        <input type="search" placeholder="Enter a City.." required />
-        <input type="submit" value="Search" />
-      </form>
-    </header>
-    <main>
-      <div>
-        <h1>Paris</h1>
-        <p>
-          Wednesday 14:48, few clouds
-          <br />
-          Humidity: 65%, Wind: 3.6km/h
-        </p>
-      </div>
+      <header>
+        <form class="search-form">
+          <input
+            type="search"
+            placeholder="Enter a City.."
+            required
+            class="search-form-input"
+          />
+          <input type="submit" value="Search" class="search-form-btn" />
+        </form>
+      </header>
+      <main>
+        <div class="weatherData">
+          <div>
+            <h1 class="weatherCity">Paris</h1>
+            <p class="weatherDetails">
+              Wednesday 14:48, few clouds
+              <br />
+              Humidity: <strong>65%</strong>, Wind: <strong>3.6km/h</strong>
+            </p>
+          </div>
 
-      <div>🌥️ 12°C</div>
-    </main>
+          <div class="weatherTempContainer">
+            <div class="weather-icon">🌥️</div>
+            <div class="weather-temp">12</div>
+            <div class="weather-unit">°C</div>
+          </div>
+        </div>
+      </main>
 
-    <footer>
-      Was coded by
-      <a href="https://github.com/Maripia12" target="_blank">Pia Paulino</a>
-      is open source on
-      <a href="https://github.com/Maripia12/MyWeather-App" target="_blank"
-        >GitHub</a
-      >
-    </footer>
+      <footer>
+        Was coded by
+        <a href="https://github.com/Maripia12" target="_blank">Pia Paulino</a>
+        is open source on
+        <a href="https://github.com/Maripia12/MyWeather-App" target="_blank"
+          >GitHub</a
+        >
+      </footer>
     </div>
   </body>
 </html>
