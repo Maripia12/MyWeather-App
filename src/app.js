@@ -2,24 +2,30 @@
 function refreshWeather(response){
 
   let cityTempElement = document.querySelector('#cityTemp')
-  cityTempElement.innerHTML = Math.round(response.data.temperature.current)
-
   let cityElement = document.querySelector("#weatherCity");
+  let descriptionElement = document.querySelector('#description')
+  let humidityElement = document.querySelector('#humidity')
+  let windSpeedElement = document.querySelector('#wind-speed')
+  let timeElement = document.querySelector('#time')
+  let iconElement = document.querySelector('#icon')
+
+  iconElement.innerHTML = `<img class="weather-icon"  src="${response.data.condition.icon_url}" alt="">
+`
+  
+  
+  cityTempElement.innerHTML = Math.round(response.data.temperature.current)
   cityElement.innerHTML = response.data.city
 
-  let descriptionElement = document.querySelector('#description')
- descriptionElement.innerHTML = response.data.condition.description
+  descriptionElement.innerHTML = response.data.condition.description
 
- let humidityElement = document.querySelector('#humidity')
-humidityElement.innerHTML = `${response.data.temperature.humidity}%`
+  humidityElement.innerHTML = `${response.data.temperature.humidity}%`
 
-let windSpeedElement = document.querySelector('#wind-speed')
-windSpeedElement.innerHTML = `${response.data.wind.speed} mph`
+  windSpeedElement.innerHTML = `${response.data.wind.speed} mph`
 
-let timeElement = document.querySelector('#time')
-let date = new Date(response.data.time * 1000)
 
-timeElement.innerHTML = formatDate(date)
+
+  let date = new Date(response.data.time * 1000)
+  timeElement.innerHTML = formatDate(date)
 // timeElement.innerHTML = `${date.getDay()}${date.getHours()}:${date.getMinutes()}` 
 
 console.log(response.data.temperature.current)
@@ -43,8 +49,6 @@ function formatDate(date){
   return `${day} ${hours}:${minutes},`
 
 }
-
-
 
 
 function searchCity(city){
