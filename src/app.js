@@ -1,3 +1,31 @@
+function handleSearchSubmit(event) {
+  event.preventDefault();
+  let searchInput = document.querySelector("#search-form-input");
+  console.log(searchInput.value);
+
+  // let city = searchInput.value[0].toUpperCase()
+  // console.log(city)
+
+  // let cityElement = document.querySelector("#weatherCity");
+  // cityElement.innerHTML = city + searchInput.value.slice(1);
+  searchCity(searchInput.value)
+}
+
+let searchFormElement = document.querySelector("#search-form");
+console.log(searchFormElement);
+
+searchFormElement.addEventListener("submit", handleSearchSubmit);
+
+
+function searchCity(city){
+  let apiKey='a03e62525c5f6b05f4bt9c6f57oe33ff'
+  let apiUrl=`https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`
+  console.log(apiUrl)
+ 
+  axios.get(apiUrl).then(refreshWeather);
+ 
+ }
+ 
 
 function refreshWeather(response){
 
@@ -9,10 +37,9 @@ function refreshWeather(response){
   let timeElement = document.querySelector('#time')
   let iconElement = document.querySelector('#icon')
 
+
   iconElement.innerHTML = `<img class="weather-icon"  src="${response.data.condition.icon_url}" alt="">
 `
-  
-  
   cityTempElement.innerHTML = Math.round(response.data.temperature.current)
   cityElement.innerHTML = response.data.city
 
@@ -22,13 +49,14 @@ function refreshWeather(response){
 
   windSpeedElement.innerHTML = `${response.data.wind.speed} mph`
 
-
-
   let date = new Date(response.data.time * 1000)
   timeElement.innerHTML = formatDate(date)
 // timeElement.innerHTML = `${date.getDay()}${date.getHours()}:${date.getMinutes()}` 
 
 console.log(response.data.temperature.current)
+
+getForeCast(response.data.city)
+
 }
 
 function formatDate(date){
@@ -51,65 +79,37 @@ function formatDate(date){
 }
 
 
-function searchCity(city){
- let apiKey='a03e62525c5f6b05f4bt9c6f57oe33ff'
- let apiUrl=`https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`
- console.log(apiUrl)
-
- axios.get(apiUrl).then(refreshWeather);
-
-}
-
-
-
-function handleSearchSubmit(event) {
-  event.preventDefault();
-  let searchInput = document.querySelector("#search-form-input");
-  console.log(searchInput.value);
-
-  // let city = searchInput.value[0].toUpperCase()
-  // console.log(city)
-
-  // let cityElement = document.querySelector("#weatherCity");
-  // cityElement.innerHTML = city + searchInput.value.slice(1);
-  searchCity(searchInput.value)
-}
-
-let searchFormElement = document.querySelector("#search-form");
-console.log(searchFormElement);
-
-searchFormElement.addEventListener("submit", handleSearchSubmit);
-
-
-
-
 function getForeCast(city){
  let apiKey = 'a03e62525c5f6b05f4bt9c6f57oe33ff'
  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=imperial`
  console.log(apiUrl)
+
+ axios.get(apiUrl).then(displayForeCast);
+
 }
 
 
-function displayForeCast(){
-
-  
-  let days = ['Mon','Tues','Weds','Thurs','Fri', 'Sat']
+function displayForeCast(response){
+  console.log(response.data)
 
   let forecastHtml = ''
 
-  days.forEach(function(day){
+  response.data.daily.forEach(function(day, index){
+    if(index < 5){
+
     forecastHtml += `
     <div class="weather-forecast-day">
-      <div class="weather-forecast-date">${day}</div>
-      <div class="weather-forecast-icon">🌥️</div>
+      <div class="weather-forecast-date">${formatDay(day.time)}</div>
+      <img class="weather-forecast-icon"src="${day.condition.icon_url}"/>
       <div class="weather-forecast-temperatures">
         <div class="weather-forecast-temperature">
-          <strong>72°</strong>
+          <strong>${Math.round(day.temperature.maximum)}</strong>
         </div>
-        <div class="weather-forecast-temperature">65°</div>
+        <div class="weather-forecast-temperature">${Math.round(day.temperature.minimum)}</div>
       </div>
     
     </div>`
+    }
   })
 
   let foreCastElement = document.querySelector('#forecast')
@@ -117,7 +117,17 @@ function displayForeCast(){
 
 }
 
-searchCity("georgia")
-getForeCast()
+function formatDay(timeStamp){
+  let date = new Date(timeStamp * 1000);
+
+  let days = ["Sun", "Mon", "Tues", "Weds", "Thur", "Fri","Sat"]
+
+  return days[date.getDay()]
+}
+
+
+
+searchCity("atlanta")
+
 displayForeCast()
 
